@@ -35,3 +35,21 @@ function logTerminal(missatge, tipus = "normal") {
     terminal.appendChild(line);
     terminal.scrollTop = terminal.scrollHeight;
 }
+
+// Logica basica del juego
+
+function compararCodis(input, secret) {
+    let resultat = [];
+
+    for (let i = 0; i < 4; i++) {
+        if (input[i] === secret[i]) {
+            resultat.push("1"); // correcte
+        } else if (secret.includes(input[i])) {
+            resultat.push("Ø"); // mal col·locat
+        } else {
+            resultat.push("×"); // no hi és
+        }
+    }
+
+    return resultat.join(" ");
+}
