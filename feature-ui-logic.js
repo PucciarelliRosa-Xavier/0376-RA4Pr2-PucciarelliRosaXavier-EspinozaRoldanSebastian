@@ -20,3 +20,18 @@ function inicialitzarSelects() {
         }
     });
 }
+
+// Terminal y autoscroll
+
+function logTerminal(missatge, tipus = "normal") {
+    const line = document.createElement("p");
+    line.classList.add("line");
+
+    if (tipus === "error") line.classList.add("error");
+    if (tipus === "success") line.classList.add("success");
+
+    line.textContent = "> " + missatge;
+
+    terminal.appendChild(line);
+    terminal.scrollTop = terminal.scrollHeight;
+}
