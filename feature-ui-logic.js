@@ -53,3 +53,40 @@ function compararCodis(input, secret) {
 
     return resultat.join(" ");
 }
+
+// Event listener del botó
+
+btnEnviar.addEventListener("click", () => {
+
+    if (rondes <= 0) {
+        logTerminal("NO QUEDEN RONDES.", "error");
+        return;
+    }
+    
+    const input = [];
+    selects.forEach(select => {
+        input.push(Number(select.value));
+    });
+
+    logTerminal("Intent: " + input.join(" "));
+
+    const resultat = compararCodis(input, codiSecret);
+    logTerminal("Resultat: " + resultat);
+
+    if (resultat === "1 1 1 1") {
+        logTerminal("ACCESS GRANTED. CODI CORRECTE!", "success");
+        rondes = 0;
+        rondesSpan.textContent = rondes;
+        return;
+    }
+
+    rondes--;
+    rondesSpan.textContent = rondes;
+
+    if (rondes === 0) {
+        logTerminal("SYSTEM LOCKED. HAS PERDUT.", "error");
+        logTerminal("El codi era: " + codiSecret.join(" "), "error");
+    }
+});
+
+inicialitzarSelects();
