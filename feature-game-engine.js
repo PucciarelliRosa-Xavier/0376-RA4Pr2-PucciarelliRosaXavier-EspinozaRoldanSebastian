@@ -1,6 +1,20 @@
+
+// Aquest fitxer conté la lògica del joc :
+// - Generació del codi secret
+// - Comparar el codi de l'usuari amb el secret
+// -mostrar el resultat
+//-Reiniciar el joc per començar partides noves
+
+//Anotació: Aquest codi conté les funcions que seran cridades per la interficie en l fitxer feature-ui-logic
+
+
+
+//Declarar el numero de rondes que té una partida
+let rondesMax = 5;
+
 //Codi per generar el numero aleatori
 
-let codiSecretFinal = generarCodiSecret()
+let codiSecret = generarCodiSecret()
 
 function generarCodiSecret() {
     const codi = [];  //Guardar els digits del codi
@@ -41,3 +55,26 @@ function compararCodis(codiUsuari, codiSecret) {
     // Per a que el resultat estigui més presentable en comptes d'un array es mostraran els 4 caracters separats per un espai
     return resultat.join(" ");
 }
+
+//Copia del codi secret per a poder fer modificacions per pantalla
+function getCodiSecret() {
+    return [...codiSecret]; // Retorna una còpia del codi secret per a que  la UI no modifiqui la variable original
+}
+
+function getRondesMax() {
+    return rondesMax; // Retorna el número màxim de rondes per partida. 
+}
+
+//Resetear el joc 
+function reiniciarJoc() {
+    codiSecret = generarCodiSecret(); // Genera un nou codi secret per una nova partida
+    rondesMax = 5; // Reinicia les rondes a 5
+}
+
+// NO BORRAR: aquest array fa que totes les funcions importants del motor de joc estiguin accessibles per a que el codi de la UI el pogui fer servir
+window.logica = {
+    compararCodis,
+    getCodiSecret,
+    getRondesMax,
+    reiniciarJoc
+};
