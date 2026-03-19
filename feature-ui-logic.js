@@ -1,15 +1,13 @@
-// Creació de les variables globals 
+// VARIABLES GLOBALS
 const selects = document.querySelectorAll(".code-input");
 const btnEnviar = document.getElementById("btn-enviar");
 const terminal = document.getElementById("terminal");
 const rondesSpan = document.getElementById("rondes-restants");
 
-let rondes = 5;
+let rondes = logica.getRondesMax();
 
-const codiSecret = [1, 2, 3, 4];
 
-// Omplir els selects amb les opcions del 0 al 9
-
+// OMPLIR SELECTS (0-9)
 function inicialitzarSelects() {
     selects.forEach(select => {
         for (let i = 0; i <= 9; i++) {
@@ -21,8 +19,8 @@ function inicialitzarSelects() {
     });
 }
 
-// Terminal y autoscroll
 
+//  Terminal
 function logTerminal(missatge, tipus = "normal") {
     const line = document.createElement("p");
     line.classList.add("line");
@@ -36,33 +34,15 @@ function logTerminal(missatge, tipus = "normal") {
     terminal.scrollTop = terminal.scrollHeight;
 }
 
-// Logica basica del juego
 
-function compararCodis(input, secret) {
-    let resultat = [];
-
-    for (let i = 0; i < 4; i++) {
-        if (input[i] === secret[i]) {
-            resultat.push("1"); // correcte
-        } else if (secret.includes(input[i])) {
-            resultat.push("Ø"); // mal col·locat
-        } else {
-            resultat.push("×"); // no hi és
-        }
-    }
-
-    return resultat.join(" ");
-}
-
-// Event listener del botó
-
+// Botón 
 btnEnviar.addEventListener("click", () => {
 
     if (rondes <= 0) {
         logTerminal("NO QUEDEN RONDES.", "error");
         return;
     }
-    
+
     const input = [];
     selects.forEach(select => {
         input.push(Number(select.value));
@@ -70,7 +50,7 @@ btnEnviar.addEventListener("click", () => {
 
     logTerminal("Intent: " + input.join(" "));
 
-    const resultat = compararCodis(input, codiSecret);
+    const resultat = logica.compararCodis(input, logica.getCodiSecret());
     logTerminal("Resultat: " + resultat);
 
     if (resultat === "1 1 1 1") {
@@ -85,8 +65,9 @@ btnEnviar.addEventListener("click", () => {
 
     if (rondes === 0) {
         logTerminal("SYSTEM LOCKED. HAS PERDUT.", "error");
-        logTerminal("El codi era: " + codiSecret.join(" "), "error");
+        logTerminal("El codi era: " + logica.getCodiSecret().join(" "), "error");
     }
 });
+
 
 inicialitzarSelects();
