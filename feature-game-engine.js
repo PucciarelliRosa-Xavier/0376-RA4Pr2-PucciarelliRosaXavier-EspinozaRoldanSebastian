@@ -20,7 +20,10 @@ function generarCodiSecret() {
     const codi = [];  //Guardar els digits del codi
     while (codi.length < 4) { //Mentre hi hagi menys de 4 elements, es seguira executant al bucle. Quan l'array tingui 4 elements ja no s'executarpa
         const num = Math.floor(Math.random() * 10);  //Generació d'un numero aleatori del 0 al 9
-        codi.push(num); //Afegir el numero a l'array
+
+        if (!codi.includes(num)) { //Amb el seguent codi fem que el numero nomes s'afegeixi si no està a l'array. 
+            codi.push(num);//Afegir numero a l'array
+        }
     }
     return codi;
 }
